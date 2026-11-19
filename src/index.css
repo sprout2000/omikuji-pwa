@@ -1,0 +1,361 @@
+:root {
+  --red: #b3261e;
+  --red-dark: #8c1d17;
+  --paper: #fff8ec;
+  --ink: #2b2b2b;
+  --gold: #c9a227;
+  --muted: #7a6e60;
+  font-family: "Hiragino Mincho ProN", "Yu Mincho", "Noto Serif JP", serif;
+  color: var(--ink);
+  background: var(--paper);
+  -webkit-tap-highlight-color: transparent;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+  margin: 0;
+}
+
+body {
+  background:
+    radial-gradient(circle at 20% 10%, rgba(179, 38, 30, 0.08), transparent 40%),
+    radial-gradient(
+      circle at 80% 90%,
+      rgba(201, 162, 39, 0.12),
+      transparent 45%
+    ),
+    var(--paper);
+}
+
+button {
+  font: inherit;
+  cursor: pointer;
+}
+button:disabled {
+  cursor: default;
+  opacity: 0.5;
+}
+
+.app {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  max-width: 480px;
+  margin: 0 auto;
+  padding: env(safe-area-inset-top) 16px env(safe-area-inset-bottom);
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 0 8px;
+}
+.header h1 {
+  margin: 0;
+  font-size: 1.6rem;
+  color: var(--red);
+  letter-spacing: 0.2em;
+}
+.header-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.ghost {
+  background: transparent;
+  border: 1px solid var(--red);
+  color: var(--red);
+  border-radius: 999px;
+  padding: 6px 14px;
+  font-size: 0.9rem;
+}
+.ghost.danger {
+  margin-top: 16px;
+}
+
+.main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  padding: 8px 0;
+}
+.main > * {
+  margin-block: auto;
+}
+
+.footer {
+  padding: 8px 0 20px;
+}
+.remaining {
+  margin: 0 0 10px;
+  text-align: center;
+  font-size: 0.9rem;
+  color: var(--muted);
+}
+.primary {
+  width: 100%;
+  padding: 16px;
+  font-size: 1.2rem;
+  letter-spacing: 0.15em;
+  color: #fff;
+  background: linear-gradient(var(--red), var(--red-dark));
+  border: none;
+  border-radius: 14px;
+  box-shadow:
+    0 4px 0 #5e130f,
+    0 8px 16px rgba(0, 0, 0, 0.15);
+  transition:
+    transform 0.08s,
+    box-shadow 0.08s;
+}
+.primary:active:not(:disabled) {
+  transform: translateY(3px);
+  box-shadow:
+    0 1px 0 #5e130f,
+    0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+/* ---------- 御神籤箱 ---------- */
+.stage {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+}
+
+.box {
+  position: relative;
+  width: 120px;
+  height: 260px;
+  transform-origin: 50% 80%;
+}
+.box-body {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  background: linear-gradient(
+    90deg,
+    #8f1f19,
+    var(--red) 30%,
+    #c8392f 50%,
+    var(--red) 70%,
+    #8f1f19
+  );
+  border: 3px solid var(--gold);
+  border-radius: 10px;
+  color: var(--paper);
+  font-size: 2rem;
+  font-weight: bold;
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.25);
+  z-index: 1;
+}
+.box-body span {
+  width: 52px;
+  text-align: center;
+  background: rgba(0, 0, 0, 0.12);
+  border-radius: 4px;
+}
+.box.shaking {
+  animation: shake 0.35s ease-in-out infinite;
+}
+
+@keyframes shake {
+  0%,
+  100% {
+    transform: rotate(0deg);
+  }
+  25% {
+    transform: rotate(-14deg) translateY(-4px);
+  }
+  75% {
+    transform: rotate(14deg) translateY(-4px);
+  }
+}
+
+.stick {
+  position: absolute;
+  left: 50%;
+  top: 0;
+  width: 16px;
+  height: 150px;
+  margin-left: -8px;
+  background: linear-gradient(90deg, #d9b98a, #f2dcb4, #d9b98a);
+  border-radius: 3px;
+  transform: translateY(20px);
+  z-index: 0;
+  display: flex;
+  justify-content: center;
+  padding-top: 8px;
+}
+.stick span {
+  writing-mode: vertical-rl;
+  font-size: 0.8rem;
+  color: var(--red);
+  font-weight: bold;
+}
+.stick.out {
+  animation: stick-out 0.6s ease-out forwards;
+}
+
+@keyframes stick-out {
+  from {
+    transform: translateY(20px);
+  }
+  to {
+    transform: translateY(-110px);
+  }
+}
+
+.hint {
+  margin: 0;
+  color: var(--muted);
+  text-align: center;
+  min-height: 1.5em;
+}
+
+/* ---------- おみくじの紙 ---------- */
+.slip {
+  width: 100%;
+  background: #fffdf7;
+  border: 1px solid #e3d6bf;
+  border-top: 8px solid var(--red);
+  border-radius: 6px;
+  padding: 20px 18px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+  animation: unfold 0.6s ease-out;
+  transform-origin: top center;
+}
+@keyframes unfold {
+  from {
+    transform: scaleY(0.05);
+    opacity: 0;
+  }
+  to {
+    transform: scaleY(1);
+    opacity: 1;
+  }
+}
+
+.slip-head {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+.slip-no {
+  color: var(--muted);
+  letter-spacing: 0.2em;
+}
+.slip-rank {
+  font-size: 4rem;
+  font-weight: bold;
+  line-height: 1.1;
+  letter-spacing: 0.1em;
+}
+.rank-best {
+  color: var(--red);
+  text-shadow: 0 0 18px rgba(201, 162, 39, 0.6);
+}
+.rank-normal {
+  color: var(--red);
+}
+.rank-bad {
+  color: #3d3d5c;
+}
+
+.slip-message {
+  margin: 16px 0;
+  padding: 12px 0;
+  border-top: 1px dashed #d8c8ac;
+  border-bottom: 1px dashed #d8c8ac;
+  line-height: 1.8;
+}
+
+.slip-details {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px 14px;
+  margin: 0;
+}
+.slip-details div {
+  display: flex;
+  flex-direction: column;
+}
+.slip-details dt {
+  color: var(--red);
+  font-weight: bold;
+  font-size: 0.9rem;
+}
+.slip-details dd {
+  margin: 2px 0 0;
+  font-size: 0.95rem;
+}
+
+.slip-lucky {
+  margin-top: 16px;
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  gap: 4px 12px;
+  font-size: 0.9rem;
+  color: var(--muted);
+}
+
+/* ---------- 履歴 ---------- */
+/* .main > * の margin-block: auto より優先させるため、セレクタを .main > .history にしている */
+.main > .history {
+  width: 100%;
+  margin-block: 0 auto;
+}
+.history h2 {
+  font-size: 1.1rem;
+  margin: 8px 0 12px;
+}
+.history ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.history li {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  padding: 10px 4px;
+  border-bottom: 1px solid #eadfcb;
+}
+.history-rank {
+  font-weight: bold;
+  font-size: 1.2rem;
+  min-width: 3em;
+}
+.history-no {
+  color: var(--muted);
+  flex: 1;
+}
+.history-date {
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+.muted {
+  color: var(--muted);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .box.shaking,
+  .stick.out,
+  .slip {
+    animation: none;
+  }
+}
