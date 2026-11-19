@@ -12,47 +12,58 @@ const testExecArgv = process.allowedNodeEnvironmentFlags.has(
   ? ["--no-experimental-webstorage"]
   : [];
 
-export default defineConfig({
-  plugins: [
-    react(),
-    VitePWA({
-      registerType: "autoUpdate",
-      includeAssets: ["icons/icon.svg", "icons/apple-touch-icon.png"],
-      manifest: {
-        name: "おみくじ",
-        short_name: "おみくじ",
-        description: "毎日の運勢を占うおみくじアプリ",
-        lang: "ja",
-        start_url: "/",
-        display: "standalone",
-        orientation: "portrait",
-        background_color: "#fff8ec",
-        theme_color: "#b3261e",
-        icons: [
-          { src: "icons/icon-192.png", sizes: "192x192", type: "image/png" },
-          { src: "icons/icon-512.png", sizes: "512x512", type: "image/png" },
-          {
-            src: "icons/icon-512.png",
-            sizes: "512x512",
-            type: "image/png",
-            purpose: "maskable",
-          },
-        ],
+// GitHub Pages では https://sprout2000.github.io/omikuji-pwa/ で公開されるので、
+// ビルド時（build / preview）だけ base をリポジトリ名にする。dev とテストは "/" のまま。
+const PAGES_BASE = "/omikuji-pwa/";
+
+export default defineConfig(({ command, isPreview }) => {
+  // vite preview は command が "serve" になるので、isPreview も見る
+  const base = command === "build" || isPreview ? PAGES_BASE : "/";
+
+  return {
+    base,
+    plugins: [
+      react(),
+      VitePWA({
+        registerType: "autoUpdate",
+        includeAssets: ["icons/icon.svg", "icons/apple-touch-icon.png"],
+        manifest: {
+          name: "おみくじ",
+          short_name: "おみくじ",
+          description: "毎日の運勢を占うおみくじアプリ",
+          lang: "ja",
+          start_url: base,
+          scope: base,
+          display: "standalone",
+          orientation: "portrait",
+          background_color: "#fff8ec",
+          theme_color: "#b3261e",
+          icons: [
+            { src: "icons/icon-192.png", sizes: "192x192", type: "image/png" },
+            { src: "icons/icon-512.png", sizes: "512x512", type: "image/png" },
+            {
+              src: "icons/icon-512.png",
+              sizes: "512x512",
+              type: "image/png",
+              purpose: "maskable",
+            },
+          ],
+        },
+        workbox: {
+          globPatterns: ["**/*.{js,css,html,svg,png}"],
+        },
+      }),
+    ],
+    test: {
+      environment: "jsdom",
+      setupFiles: ["./src/test/setup.ts"],
+      execArgv: testExecArgv,
+      coverage: {
+        provider: "v8",
+        reporter: ["text", "html"],
+        include: ["src/**/*.{ts,tsx}"],
+        exclude: ["src/**/*.test.{ts,tsx}", "src/test/**", "src/main.tsx"],
       },
-      workbox: {
-        globPatterns: ["**/*.{js,css,html,svg,png}"],
-      },
-    }),
-  ],
-  test: {
-    environment: "jsdom",
-    setupFiles: ["./src/test/setup.ts"],
-    execArgv: testExecArgv,
-    coverage: {
-      provider: "v8",
-      reporter: ["text", "html"],
-      include: ["src/**/*.{ts,tsx}"],
-      exclude: ["src/**/*.test.{ts,tsx}", "src/test/**", "src/main.tsx"],
     },
-  },
+  };
 });

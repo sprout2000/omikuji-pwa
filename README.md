@@ -24,6 +24,17 @@ npm run coverage  # カバレッジ付きでテスト（coverage/index.html に�
 npm run check     # Biome でリントとフォーマット（自動で直せるものは直す）
 ```
 
+## GitHub Pages へのデプロイ
+
+```sh
+npm run deploy    # ビルドして dist/ を gh-pages ブランチに push
+```
+
+公開先は https://sprout2000.github.io/omikuji-pwa/ です。
+初回だけ、GitHub のリポジトリの Settings → Pages で、Source を「Deploy from a branch」、Branch を `gh-pages` / `/ (root)` にしてください。
+
+ビルド時の公開パス（`/omikuji-pwa/`）は `vite.config.ts` の `PAGES_BASE` で変えられます。
+
 ## 主なファイル
 
 - `src/omikuji.ts` … 運勢の確率・文言（ここを編集すれば内容を変えられます）
