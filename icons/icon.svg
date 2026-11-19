@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+<title>おみくじ</title>
+<rect width="512" height="512" fill="#b3261e"/>
+<rect x="176" y="70" width="160" height="372" rx="18" fill="#fff8ec"/>
+<rect x="176" y="70" width="160" height="56" rx="18" fill="#2b2b2b"/>
+<text x="256" y="250" font-family="serif" font-size="120" text-anchor="middle" fill="#b3261e" font-weight="bold">大</text>
+<text x="256" y="380" font-family="serif" font-size="120" text-anchor="middle" fill="#b3261e" font-weight="bold">吉</text>
+</svg>
