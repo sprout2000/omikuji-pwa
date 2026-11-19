@@ -9,13 +9,15 @@
     "preview": "vite preview",
     "test": "vitest",
     "test:run": "vitest run",
-    "coverage": "vitest run --coverage"
+    "coverage": "vitest run --coverage",
+    "check": "biome check --write ."
   },
   "dependencies": {
     "react": "^19.3.1",
     "react-dom": "^19.3.1"
   },
   "devDependencies": {
+    "@biomejs/biome": "^2.6.8",
     "@testing-library/dom": "^10.4.2",
     "@testing-library/jest-dom": "^8.0.0",
     "@testing-library/react": "^16.3.3",

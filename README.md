@@ -21,6 +21,7 @@ npm run preview   # ビルド結果を確認（Service Worker はこちらで動
 npm test          # テスト（ウォッチモード）
 npm run test:run  # テストを 1 回だけ実行
 npm run coverage  # カバレッジ付きでテスト（coverage/index.html に詳細）
+npm run check     # Biome でリントとフォーマット（自動で直せるものは直す）
 ```
 
 ## 主なファイル
@@ -31,3 +32,4 @@ npm run coverage  # カバレッジ付きでテスト（coverage/index.html に�
 - `src/useDrawCount.ts` … 1 日に引いた回数の管理（上限は `MAX_DRAWS`）
 - `vite.config.ts` … PWA マニフェスト設定（vite-plugin-pwa）と Vitest の設定
 - `src/*.test.ts(x)` … Vitest + Testing Library のテスト
+- `biome.json` … Biome（リンター・フォーマッター）の設定
